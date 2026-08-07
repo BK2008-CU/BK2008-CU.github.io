@@ -1,0 +1,509 @@
+/* ============================================================
+   Blair Kang — Portfolio Stylesheet
+   Direction: real glassmorphism on a soft, fixed pastel wash
+   (baby blue + blush pink) backdrop that stays put as the page
+   scrolls beneath it — content floats over one continuous
+   atmosphere instead of a flat color. Motion is graceful and,
+   where the browser supports it, tied to scroll position.
+   ============================================================ */
+
+@view-transition {
+    navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 0.6s;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+    --cream: #fdf6f8;
+    --ink: #33323e;
+    --ink-soft: #5c5a6b;
+    --muted: #8d8b9c;
+
+    /* pink accents */
+    --bronze: #f0a8bb;
+    --bronze-deep: #d97897;
+    --mauve: #f6cddb;
+
+    /* baby blue accents */
+    --mist: #a8d8e8;
+    --mist-deep: #6fb3cf;
+
+    /* deeper rose/plum for emphasis — also the single page-title color */
+    --burgundy: #b6527a;
+    --burgundy-deep: #8a3a5c;
+
+    --glass: rgba(255, 255, 255, 0.42);
+    --glass-strong: rgba(255, 255, 255, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.65);
+    --line: rgba(51, 50, 62, 0.08);
+
+    --glow-bronze: 0 10px 40px rgba(240, 168, 187, 0.35);
+    --glow-mist: 0 10px 40px rgba(168, 216, 232, 0.35);
+    --glow-burgundy: 0 10px 40px rgba(182, 82, 122, 0.24);
+    --shadow-sm: 0 4px 18px rgba(51, 50, 62, 0.07);
+    --shadow-lg: 0 26px 60px rgba(51, 50, 62, 0.14);
+    --inner-light: inset 0 1px 0 rgba(255, 255, 255, 0.7), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+
+    --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+
+    --content-width: 900px;
+    --radius: 24px;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+
+html {
+    scroll-behavior: smooth;
+    min-height: 100%;
+    background:
+        radial-gradient(at 10% 15%, rgba(168, 216, 232, 0.55), transparent 55%),
+        radial-gradient(at 88% 10%, rgba(111, 179, 207, 0.4), transparent 55%),
+        radial-gradient(at 20% 92%, rgba(240, 168, 187, 0.38), transparent 58%),
+        radial-gradient(at 92% 85%, rgba(182, 82, 122, 0.14), transparent 55%),
+        var(--cream);
+    background-size: 220% 220%;
+    background-attachment: fixed;
+    animation: wash-drift 34s ease-in-out infinite alternate;
+}
+
+@keyframes wash-drift {
+    0%   { background-position: 0% 10%; }
+    50%  { background-position: 60% 70%; }
+    100% { background-position: 20% 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { animation: none; }
+}
+
+body {
+    margin: 0;
+    position: relative;
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    animation: rise-in 0.8s var(--ease) both;
+    max-width: var(--content-width);
+    margin-inline: auto;
+    padding: 2.5rem 2rem 7rem;
+}
+
+main {
+    max-width: var(--content-width);
+    margin-inline: auto;
+    padding: 0 2rem 7rem;
+}
+
+::selection { background: var(--bronze); color: #fff; }
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--bronze), var(--mist));
+    opacity: 0.6;
+    border-radius: 8px;
+    border: 2px solid transparent;
+}
+
+/* ---------- type ---------- */
+h1, h2, h3 {
+    font-family: var(--font-display);
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin: 0 0 0.45em;
+}
+
+h1 {
+    font-size: clamp(2.4rem, 5vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.08;
+    color: var(--ink);
+}
+
+/* big page header — Home / About / Experience / Projects / Certificates
+   one solid accent color, centered so it lines up with the centered
+   nav pill above it instead of hugging the left edge of the column,
+   with the two-tone underline centered underneath it */
+.page-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+    margin: 0 0 2.75rem;
+    color: var(--burgundy);
+    text-align: center;
+}
+
+.page-title::after {
+    content: "";
+    display: block;
+    width: 54px;
+    height: 3px;
+    margin: 0.85rem auto 0;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--mist-deep), var(--bronze));
+}
+
+h3 { font-size: 1.08rem; font-weight: 700; letter-spacing: -0.01em; color: var(--ink); }
+
+p { color: var(--ink-soft); max-width: 62ch; font-size: 1rem; }
+
+strong { color: var(--burgundy); font-weight: 700; }
+
+a {
+    color: var(--mist-deep);
+    text-decoration: none;
+    position: relative;
+}
+
+a:not(nav a) {
+    background-image: linear-gradient(var(--mist-deep), var(--mist-deep));
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 1px;
+    transition: background-size 0.5s var(--ease), color 0.5s var(--ease);
+}
+
+a:not(nav a):hover {
+    background-size: 100% 1px;
+    color: var(--bronze-deep);
+}
+
+/* ---------- nav — floating glass pill ---------- */
+nav {
+    position: sticky;
+    top: 16px;
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    gap: 1.8rem;
+    align-items: center;
+    width: fit-content;
+    margin: 0 auto 3rem;
+    padding: 0.95rem 2.1rem;
+    background: var(--glass-strong);
+    backdrop-filter: blur(28px) saturate(200%);
+    -webkit-backdrop-filter: blur(28px) saturate(200%);
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    box-shadow: var(--shadow-sm), var(--inner-light);
+    transition: box-shadow 0.5s var(--ease);
+}
+
+nav:hover { box-shadow: var(--glow-bronze), var(--inner-light); }
+
+nav a {
+    font-size: 0.84rem;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    color: var(--ink-soft);
+    transition: color 0.4s var(--ease);
+}
+
+nav a:hover,
+nav a.active {
+    color: var(--burgundy);
+    text-shadow: 0 0 10px rgba(182, 82, 122, 0.5), 0 0 26px rgba(240, 168, 187, 0.45);
+}
+
+/* ---------- hero copy ---------- */
+body > p:first-of-type,
+main > p:first-of-type {
+    font-size: 1.32rem;
+    line-height: 1.75;
+    letter-spacing: -0.01em;
+    max-width: 66ch;
+    color: var(--ink-soft);
+}
+
+/* ---------- shared glass-panel recipe ---------- */
+.experience,
+.projects,
+.cert-card,
+.about-card,
+main > div:not(.experience):not(.certificates-grid):not(.contact-section):not(.about),
+.contact-section {
+    position: relative;
+    background: var(--glass);
+    backdrop-filter: blur(30px) saturate(190%);
+    -webkit-backdrop-filter: blur(30px) saturate(190%);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm), var(--inner-light);
+    transition: box-shadow 0.6s var(--ease), transform 0.6s var(--ease), border-color 0.6s var(--ease);
+}
+
+/* ---------- experience — clean glass cards (no timeline) ---------- */
+.experience {
+    margin-bottom: 1.5rem;
+    padding: 2.1rem 2.2rem;
+}
+
+.experience:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg), var(--glow-bronze), var(--inner-light);
+    border-color: rgba(240, 168, 187, 0.45);
+}
+
+.experience h1 {
+    font-size: 1.5rem;
+    letter-spacing: -0.015em;
+}
+
+/* role / subtitle line under a card title — e.g. job title */
+.role {
+    display: block;
+    font-weight: 700;
+    font-size: 0.94rem;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    color: var(--bronze-deep);
+    margin-bottom: 0.9rem;
+}
+
+/* date pill — reusable in experience AND project cards. Kept
+   visually distinct from both the role label (pink, uppercase)
+   and bold/strong text (burgundy) so it never blends in: mono
+   font, blue tone, pill shape. */
+.date-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 0.74rem;
+    letter-spacing: 0.02em;
+    color: var(--mist-deep);
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(168, 216, 232, 0.45);
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    margin: 0 0 1.2rem;
+}
+
+.experience ul { margin: 1.1rem 0 0; padding-left: 1.2rem; }
+.experience li { margin-bottom: 0.5rem; color: var(--ink-soft); }
+.experience li::marker { color: var(--bronze); }
+
+/* ---------- projects — glass cards, 3 per row on desktop ---------- */
+.projects,
+main > div:not(.experience):not(.certificates-grid):not(.contact-section):not(.about) {
+    padding: 2.2rem 2.3rem;
+    margin-bottom: 1.5rem;
+}
+
+.projects:hover,
+.about-card:hover,
+main > div:not(.experience):not(.certificates-grid):not(.contact-section):not(.about):hover {
+    transform: translateY(-7px);
+    box-shadow: var(--shadow-lg), var(--glow-mist), var(--inner-light);
+    border-color: rgba(168, 216, 232, 0.55);
+}
+
+.projects h1 {
+    font-size: 1.4rem;
+    letter-spacing: -0.015em;
+}
+
+/* centered so an incomplete last row (e.g. 5 cards over 3 columns)
+   sits in the middle of the row instead of pinned to the left */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.projects-grid .projects { margin-bottom: 0; }
+
+.projects h3 {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+    color: var(--bronze-deep);
+    text-transform: uppercase;
+    margin-top: 1.3rem;
+}
+
+.projects ul { padding-left: 1.2rem; }
+.projects li { margin-bottom: 0.5rem; }
+.projects li::marker { color: var(--bronze); }
+
+/* ---------- certificates — grouped glass card grid ---------- */
+.certificates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    justify-content: center;
+    gap: 1.1rem;
+}
+
+.cert-card {
+    padding: 1.8rem 1.8rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.1rem;
+    min-height: 168px;
+}
+
+.cert-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg), var(--glow-burgundy), var(--inner-light);
+    border-color: rgba(182, 82, 122, 0.32);
+}
+
+.cert-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+    color: var(--ink);
+}
+
+.cert-card p {
+    display: inline-flex;
+    align-self: flex-start;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--bronze-deep);
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(240, 168, 187, 0.35);
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    margin: 0;
+}
+
+/* ---------- about — glass card around the bio paragraph, same
+   recipe + hover lift as the project cards ---------- */
+.about-card {
+    padding: 2.2rem 2.3rem;
+    margin-top: 0.5rem;
+}
+
+.about-card p {
+    max-width: none;
+    margin: 0;
+}
+
+/* ---------- contact / home — a single narrow card, centered
+   on its own (unlike the full-width cards above) ---------- */
+.contact-section {
+    padding: 2.5rem 2.5rem;
+    max-width: 460px;
+    margin: 4rem auto;
+}
+
+.contact-section h3 {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--bronze-deep);
+    margin-bottom: 1.4rem;
+}
+
+.contact-section p {
+    display: flex;
+    gap: 0.6rem;
+    padding: 0.65rem 0.55rem;
+    margin: 0 -0.55rem;
+    border-radius: 12px;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.98rem;
+    transition: background 0.4s var(--ease);
+}
+
+.contact-section p:last-child { border-bottom: none; }
+.contact-section p:hover { background: rgba(240, 168, 187, 0.15); }
+
+/* ---------- motion on load (universal fallback) ---------- */
+@keyframes rise-in {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.experience,
+.projects,
+.cert-card,
+.about-card,
+main > div:not(.certificates-grid):not(.contact-section):not(.about) {
+    animation: rise-in 0.7s var(--ease) both;
+}
+.experience:nth-of-type(2), .projects:nth-of-type(2), .cert-card:nth-child(2) { animation-delay: 0.06s; }
+.experience:nth-of-type(3), .projects:nth-of-type(3), .cert-card:nth-child(3) { animation-delay: 0.12s; }
+.experience:nth-of-type(4), .projects:nth-of-type(4), .cert-card:nth-child(4) { animation-delay: 0.18s; }
+.cert-card:nth-child(5) { animation-delay: 0.24s; }
+.cert-card:nth-child(6) { animation-delay: 0.3s; }
+.cert-card:nth-child(7) { animation-delay: 0.36s; }
+
+/* ---------- motion tied to scroll position (progressive
+   enhancement — Chrome/Edge today, ignored elsewhere) ---------- */
+@supports (animation-timeline: view()) {
+    .experience,
+    .projects,
+    .cert-card,
+    .about-card,
+    main > div:not(.certificates-grid):not(.contact-section):not(.about) {
+        animation: fade-up-view linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 30%;
+        animation-delay: 0s;
+    }
+}
+
+@keyframes fade-up-view {
+    from { opacity: 0.65; transform: translateY(8px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ---------- focus (accessibility) ---------- */
+a:focus-visible,
+nav a:focus-visible {
+    outline: 2px solid var(--bronze-deep);
+    outline-offset: 3px;
+    border-radius: 3px;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    body { padding: 2rem 1.3rem 4.5rem; }
+    main { padding: 0 1.3rem 4.5rem; }
+    nav { flex-wrap: wrap; gap: 1rem 1.2rem; padding: 0.9rem 1.4rem; top: 10px; }
+    h1 { font-size: 2rem; }
+    .experience { padding: 1.6rem 1.5rem; }
+    .projects, main > div { padding: 1.6rem 1.6rem; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .certificates-grid { grid-template-columns: 1fr; }
+    body > p:first-of-type, main > p:first-of-type { font-size: 1.12rem; }
+}
